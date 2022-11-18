@@ -1834,7 +1834,9 @@ end;
 
 // perform asynchronous write operation
 function TCustomComPort.WriteStrAsync(var Str: string; var AsyncPtr: PAsync): Integer;
-var sa : Ansistring; var i:integer;
+var
+  sa: Ansistring;
+//  i: integer;
 begin
   if Length(Str) > 0 then
   begin
@@ -1948,8 +1950,8 @@ end;
 function TCustomComPort.ReadStr(var Str: string; Count: Integer): Integer;
 var
   AsyncPtr: PAsync;
-  sa :ansistring;
-  i : integer;
+  sa: AnsiString;
+//  i: integer;
 begin
   InitAsync(AsyncPtr);
   try
@@ -3263,16 +3265,21 @@ begin
 end;
 
 procedure TComDataPacket.RxBuf(Sender: TObject; const Buffer; Count: Integer);
-var sa:AnsiString; Str: string;
-      i:integer;
+var
+  sa: AnsiString;
+  Str: string;
+//  i: Integer;
 begin
   SetLength(Str, Count);
   SetLength(Sa, Count);
   Move(Buffer, Sa[1], Count);
   {$IFDEF Unicode}
   if length(sa)>0 then
-    for i := 1 to length(sa) do str[i] := char(byte(sa[i]));
-  {$ELSE}  str := sa;  {$ENDIF}
+    for i := 1 to length(sa) do
+      str[i] := char(byte(sa[i]));
+  {$ELSE}
+  str := sa;
+  {$ENDIF}
   AddData(Str);
 end;
 
@@ -3280,52 +3287,52 @@ end;
 procedure TComDataPacket.EmptyBuffer;
 begin
   if Buffer <> '' then
-  begin
-    try
-      DoDiscard(Buffer);
-    finally
-      Buffer := '';
-      FInPacket := False;
+    begin
+      try
+        DoDiscard(Buffer);
+      finally
+        Buffer := '';
+        FInPacket := False;
+      end;
     end;
-  end;
 end;
 
 // set com port
 procedure TComDataPacket.SetComPort(const Value: TCustomComPort);
 begin
   if Value <> FComPort then
-  begin
-    if FComPort <> nil then
-      FComPort.UnRegisterLink(FComLink);
-    FComPort := Value;
-    if FComPort <> nil then
     begin
-      FComPort.FreeNotification(Self);
-      FComPort.RegisterLink(FComLink);
+      if FComPort <> nil then
+        FComPort.UnRegisterLink(FComLink);
+      FComPort := Value;
+      if FComPort <> nil then
+        begin
+          FComPort.FreeNotification(Self);
+          FComPort.RegisterLink(FComLink);
+        end;
     end;
-  end;
 end;
 
 // set case sensitivity
 procedure TComDataPacket.SetCaseInsensitive(const Value: Boolean);
 begin
   if FCaseInsensitive <> Value then
-  begin
-    FCaseInsensitive := Value;
-    if not (csLoading in ComponentState) then
-      EmptyBuffer;
-  end;
+    begin
+      FCaseInsensitive := Value;
+      if not (csLoading in ComponentState) then
+        EmptyBuffer;
+    end;
 end;
 
 // set packet size
 procedure TComDataPacket.SetSize(const Value: Integer);
 begin
   if FSize <> Value then
-  begin
-    FSize := Value;
-    if not (csLoading in ComponentState) then
-      EmptyBuffer;
-  end;
+    begin
+      FSize := Value;
+      if not (csLoading in ComponentState) then
+        EmptyBuffer;
+    end;
 end;
 
 // set start string
@@ -3343,11 +3350,11 @@ end;
 procedure TComDataPacket.SetStopString(const Value: string);
 begin
   if FStopString <> Value then
-  begin
-    FStopString := Value;
-    if not (csLoading in ComponentState) then
-      EmptyBuffer;
-  end;
+    begin
+      FStopString := Value;
+      if not (csLoading in ComponentState) then
+        EmptyBuffer;
+    end;
 end;
 
 (*****************************************
@@ -3432,9 +3439,13 @@ end;
 procedure EnumComPorts(Ports: TStrings);
 var
   KeyHandle: HKEY;
-  ErrCode, Index: Integer;
-  ValueName, Data: string;
-  ValueLen, DataLen, ValueType: DWORD;
+  ErrCode: Integer;
+  Index: Integer;
+  ValueName: string;
+  Data: string;
+  ValueLen: DWord;
+  DataLen: DWord;
+  ValueType: DWord;
   TmpPorts: TStringList;
 begin
   ErrCode := RegOpenKeyEx(
@@ -3445,10 +3456,10 @@ begin
     KeyHandle);
 
   if ErrCode <> ERROR_SUCCESS then
-  begin
-    //raise EComPort.Create(CError_RegError, ErrCode);
-    exit;
-  end;
+    begin
+      //raise EComPort.Create(CError_RegError, ErrCode);
+      exit;
+    end;
 
   TmpPorts := TStringList.Create;
   try
@@ -3473,11 +3484,11 @@ begin
         @DataLen);
 
       if ErrCode = ERROR_SUCCESS then
-      begin
-        SetLength(Data, DataLen - 1);
-        TmpPorts.Add(Data);
-        Inc(Index);
-      end
+        begin
+          SetLength(Data, DataLen - 1);
+          TmpPorts.Add(Data);
+          Inc(Index);
+        end
       else
         if ErrCode <> ERROR_NO_MORE_ITEMS then break;
           //raise EComPort.Create(CError_RegError, ErrCode);
@@ -3490,7 +3501,6 @@ begin
     RegCloseKey(KeyHandle);
     TmpPorts.Free;
   end;
-
 end;
 
 // string to baud rate
@@ -3500,11 +3510,11 @@ var
 begin
   I := Low(TBaudRate);
   while (I <= High(TBaudRate)) do
-  begin
-    if UpperCase(Str) = UpperCase(BaudRateToStr(TBaudRate(I))) then
-      Break;
-    I := Succ(I);
-  end;
+    begin
+      if UpperCase(Str) = UpperCase(BaudRateToStr(TBaudRate(I))) then
+        Break;
+      I := Succ(I);
+    end;
   if I > High(TBaudRate) then
     Result := br9600
   else
@@ -3536,11 +3546,11 @@ var
 begin
   I := Low(TDataBits);
   while (I <= High(TDataBits)) do
-  begin
-    if UpperCase(Str) = UpperCase(DataBitsToStr(I)) then
-      Break;
-    I := Succ(I);
-  end;
+    begin
+      if UpperCase(Str) = UpperCase(DataBitsToStr(I)) then
+        Break;
+      I := Succ(I);
+    end;
   if I > High(TDataBits) then
     Result := dbEight
   else
@@ -3626,6 +3636,7 @@ const
 begin
   Result := FlowControlStrings[FlowControl];
 end;
+
 
 initialization
   ComErrorMessages[1]:='Unable to open com port';
