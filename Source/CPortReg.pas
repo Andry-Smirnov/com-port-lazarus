@@ -9,19 +9,29 @@
 
 unit CPortReg;
 
+
 {$I CPort.inc}
+
 
 interface
 
+
 uses
 {$IF DEFINED(FPC)}
-  LazIDEIntf, PropEdits, ComponentEditors,
+  LazIDEIntf,
+  PropEdits,
+  ComponentEditors,
 {$ELSEIF DEFINED(DELPHI_6_OR_HIGHER)}
-  DesignIntf, DesignEditors, DesignMenus, PropertyCategories,
+  DesignIntf,
+  DesignEditors,
+  DesignMenus,
+  PropertyCategories,
 {$ELSE}
   DsgnIntf,
-{$ENDIF}
-  Classes, Menus;
+{$IFEND}
+  Classes,
+  Menus;
+
 
 type
   // default ComPort Library component editor
