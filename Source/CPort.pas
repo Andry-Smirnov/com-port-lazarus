@@ -3273,13 +3273,13 @@ begin
   SetLength(Str, Count);
   SetLength(Sa, Count);
   Move(Buffer, Sa[1], Count);
-  {$IFDEF Unicode}
+{$IFDEF Unicode}
   if length(sa)>0 then
     for i := 1 to length(sa) do
       str[i] := char(byte(sa[i]));
-  {$ELSE}
+{$ELSE}
   str := sa;
-  {$ENDIF}
+{$ENDIF}
   AddData(Str);
 end;
 
