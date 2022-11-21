@@ -6,7 +6,6 @@
  * maintained by Lars B. Dybdahl, 2003                *
  * Homepage: http://comport.sf.net/                   *
  *****************************************************)
-
 unit CPortReg;
 
 
@@ -84,6 +83,7 @@ type
     function GetAttributes: TPropertyAttributes; override;
   end;
 
+
 {$IFDEF DELPHI_5}
   TComCat = class(TPropertyCategory)
   public
@@ -114,20 +114,30 @@ type
     class function Name: string; override;
     class function Description: string; override;
   end;
-
 {$ENDIF}
+
 
 procedure Register;
 
+
 implementation
+
 
 {$IFNDEF FPC}
   {$R CPortImg.res}
 {$ENDIF}
 
+
 uses
-  CPort, CPortCtl, CPortSetup, CPortTrmSet, CPortAbout,
-  Forms, Dialogs, Graphics;
+  CPort,
+  CPortCtl,
+  CPortSetup,
+  CPortTrmSet,
+  CPortAbout,
+  Forms,
+  Dialogs,
+  Graphics;
+
 
 (*****************************************
  * TComLibraryEditor editor              *
@@ -282,7 +292,6 @@ begin
 end;
 
 {$IFDEF DELPHI_5}
-
 (*****************************************
  * TComCategory property category        *
  *****************************************)
@@ -352,13 +361,20 @@ class function TComTerminalCat.Name: string;
 begin
   Result := 'Terminal Setup';
 end;
-
 {$ENDIF}
+
 
 procedure Register;
 begin
-  RegisterComponents('CPortLib', [TComPort, TComDataPacket,
-    TComComboBox, TComRadioGroup, TComLed, TComTerminal]);
+  RegisterComponents('CPortLib', 
+    [
+      TComPort,
+      TComDataPacket,
+      TComComboBox,
+      TComRadioGroup,
+      TComLed,
+      TComTerminal
+    ]);
   RegisterComponentEditor(TComPort, TComPortEditor);
   RegisterComponentEditor(TComTerminal, TComTerminalEditor);
   RegisterComponentEditor(TComDataPacket, TComLibraryEditor);
@@ -381,27 +397,77 @@ begin
   RegisterPropertiesInCategory(TComPacketEventsCat, TComDataPacket,
     ['OnPacket', 'OnDiscard']);
   RegisterPropertiesInCategory(TComTerminalCat, TComTerminal,
-    ['Columns', 'Rows', 'Emulation', 'Caret', 'Connected', 'Font', 'ArrowKeys',
+    [
+      'Columns',
+      'Rows', 'Emulation', 'Caret', 'Connected', 'Font', 'ArrowKeys',
     'OnGetEscapeCodes', 'OnUnhandledCode', 'OnStrRecieved']);
   RegisterPropertiesInCategory(TVisualCategory, TComLed, ['Kind']);
 {$ENDIF}
 {$IF DEFINED(DELPHI_6_OR_HIGHER) AND NOT DEFINED(FPC)}
-  RegisterPropertiesInCategory('Serial communication', TComPort, ['BaudRate', 'StopBits',
-    'DataBits', 'Port', 'EventChar', 'Connected', 'DiscardNull', 'Events',
-    'FlowControl', 'Timeouts', 'Parity', 'Buffer', 'OnAfterOpen', 'OnBeforeOpen',
-    'OnAfterClose', 'OnBeforeClose', 'OnRxChar', 'OnTxEmpty', 'OnCTSChange',
-    'OnRLSDChange', 'OnDSRChange', 'OnError', 'OnRing', 'OnRxBuf', 'OnRxFlag',
-    'OnRx80Full', 'OnBreak']);
-  RegisterPropertiesInCategory('Packet setup', TComDataPacket, ['CaseInsensitive',
-    'IncludeStrings', 'MaxBufferSize', 'Size', 'StartString', 'StopString']);
-  RegisterPropertiesInCategory('ASCII setup', TComTerminal, ['AppendLF',
-    'SendLF', 'Force7Bit', 'WrapLines', 'LocalEcho']);
+  RegisterPropertiesInCategory('Serial communication', TComPort,
+    [
+      'BaudRate',
+      'StopBits',
+      'DataBits',
+      'Port',
+      'EventChar',
+      'Connected',
+      'DiscardNull',
+      'Events',
+      'FlowControl',
+      'Timeouts',
+      'Parity',
+      'Buffer',
+      'OnAfterOpen',
+      'OnBeforeOpen',
+      'OnAfterClose',
+      'OnBeforeClose',
+      'OnRxChar',
+      'OnTxEmpty',
+      'OnCTSChange',
+      'OnRLSDChange',
+      'OnDSRChange',
+      'OnError',
+      'OnRing',
+      'OnRxBuf',
+      'OnRxFlag',
+      'OnRx80Full',
+      'OnBreak'
+    ]);
+  RegisterPropertiesInCategory('Packet setup', TComDataPacket, 
+    [
+      'CaseInsensitive',
+      'IncludeStrings',
+      'MaxBufferSize',
+      'Size',
+      'StartString',
+      'StopString'
+    ]);
+  RegisterPropertiesInCategory('ASCII setup', TComTerminal,
+    [
+      'AppendLF',
+      'SendLF',
+      'Force7Bit',
+      'WrapLines',
+      'LocalEcho'
+    ]);
   RegisterPropertiesInCategory('Packets', TComDataPacket,
     ['OnPacket', 'OnDiscard']);
   RegisterPropertiesInCategory('Terminal setup', TComTerminal,
-    ['Columns', 'Rows', 'Emulation', 'Caret', 'Connected', 'Font', 'ArrowKeys',
-    'OnGetEscapeCodes', 'OnUnhandledCode', 'OnStrRecieved']);
-{$ENDIF}
+    [
+      'Columns',
+      'Rows',
+      'Emulation',
+      'Caret',
+      'Connected',
+      'Font',
+      'ArrowKeys',
+      'OnGetEscapeCodes',
+      'OnUnhandledCode',
+      'OnStrRecieved'
+    ]);
+{$IFEND}
 end;
+
 
 end.
