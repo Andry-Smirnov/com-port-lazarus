@@ -28,7 +28,7 @@ package DsgnCPortD10x;
 
 requires
   vcl,
-  CPortLibDXE,
+  CPortLibD10x,
   designide;
 
 contains
