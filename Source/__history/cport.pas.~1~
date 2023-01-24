@@ -19,7 +19,7 @@ unit CPort;
 interface
 
 uses
-  Windows, System.Types, Messages, Classes, SysUtils, IniFiles, Registry;
+  Windows, Messages, Classes, SysUtils, IniFiles, Registry;
 
 type
   TComExceptions = ( CE_OpenFailed      ,    CE_WriteFailed     ,
@@ -1836,7 +1836,7 @@ end;
 function TCustomComPort.WriteStrAsync(var Str: string; var AsyncPtr: PAsync): Integer;
 var
   sa: Ansistring;
-  i: integer;
+//  i: integer;
 begin
   if Length(Str) > 0 then
   begin
@@ -1888,7 +1888,7 @@ begin
   InitAsync(AsyncPtr);
   try
     setLength(rb,count);
-//ANDRY!!!    Result := ReadAsync(rb[1], Count, AsyncPtr);  //  ReadStr(s, Count);
+    Result := ReadAsync(rb[1], Count, AsyncPtr);  //  ReadStr(s, Count);
     //{$IFDEF Unicode}rb := UTF8Encode(s);{$ELSE} rb := s;  {$ENDIF}
     l := MultiByteToWideChar(FCodePage, 0, PAnsiChar(rb), Length(rb), nil, 0);
     SetLength(Str, l);
@@ -1951,7 +1951,7 @@ function TCustomComPort.ReadStr(var Str: string; Count: Integer): Integer;
 var
   AsyncPtr: PAsync;
   sa: AnsiString;
-  i: integer;
+//  i: integer;
 begin
   InitAsync(AsyncPtr);
   try
@@ -3268,7 +3268,7 @@ procedure TComDataPacket.RxBuf(Sender: TObject; const Buffer; Count: Integer);
 var
   sa: AnsiString;
   Str: string;
-  i: Integer;
+//  i: Integer;
 begin
   SetLength(Str, Count);
   SetLength(Sa, Count);

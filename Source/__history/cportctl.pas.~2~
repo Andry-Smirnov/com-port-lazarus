@@ -33,7 +33,6 @@ uses
 {$IFDEF FPC}
   LCLType,
 {$ENDIF}
-  System.Types,
   System.UITypes,
   Classes, Controls, StdCtrls, ExtCtrls, Forms,
   Messages, Graphics, Windows, CPort, CPortEsc;
