@@ -1,4 +1,5 @@
-package DsgnCPortD10x;
+package DsgnCPortD104;
+
 
 {$R *.res}
 {$ALIGN 8}
@@ -22,17 +23,20 @@ package DsgnCPortD10x;
 {$WRITEABLECONST ON}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'ComPort Library Delphi'}
+{$DESCRIPTION 'ComPort Library'}
 {$DESIGNONLY}
 {$IMPLICITBUILD OFF}
 
+
 requires
   vcl,
-  CPortLib,
+  CPortLibD104,
   designide;
+
 
 contains
   CPortReg in 'CPortReg.pas',
   CPortAbout in 'CPortAbout.pas' {AboutBox};
+
 
 end.

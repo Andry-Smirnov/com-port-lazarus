@@ -1,4 +1,5 @@
-package CPortLibD10x;
+package CPortLibD104;
+
 
 {$R *.res}
 {$R *.otares}
@@ -30,10 +31,12 @@ package CPortLibD10x;
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
+
 requires
   vcl,
   rtl,
   vclx;
+
 
 contains
   CPort in 'CPort.pas',
@@ -41,5 +44,6 @@ contains
   CPortCtl in 'CPortCtl.pas',
   CPortEsc in 'CPortEsc.pas',
   CPortTrmSet in 'CPortTrmSet.pas' {ComTrmSetForm};
+
 
 end.
